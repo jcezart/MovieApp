@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +16,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
     val rvCategory = findViewById<RecyclerView>(R.id.rv_categories)
+
+        //setando o adapter
+    val adapter = CategoryAdapter()
+        rvCategory.adapter = adapter
+        rvCategory.layoutManager = LinearLayoutManager(this)
+            .apply {
+                orientation = LinearLayoutManager.HORIZONTAL
+            }
+        //submetendo a lista no adapter
+        adapter.submitList(categories)
+
 
     }
 }
