@@ -18,3 +18,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 }
+
+val categories = listOf(
+    Category(
+        name = "Now Playing"
+    ),
+    Category(
+        name = "Upcoming"
+    ),
+    Category(
+        name = "Top rated"
+    ),
+    Category(
+        name = "Popular"
+    )
+
+
+)
