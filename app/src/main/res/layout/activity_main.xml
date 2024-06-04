@@ -49,7 +49,17 @@
         app:layout_constraintTop_toBottomOf="@+id/sv_search"
         tools:listitem="@layout/item_category"/>
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_movie_list"
+        android:layout_width="380dp"
+        android:layout_height="269dp"
+        android:layout_marginTop="-24dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rv_categories"
+        app:layout_constraintStart_toStartOf="@+id/rv_categories"
+        app:layout_constraintTop_toBottomOf="@+id/rv_categories"
+        tools:listitem="@layout/movie_list"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
