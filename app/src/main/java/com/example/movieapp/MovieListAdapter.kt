@@ -9,6 +9,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+
+import com.example.movieapp.R
 
 class MovieListAdapter:
     ListAdapter<MovieList, MovieListAdapter.MovieListViewHolder>(MovieListAdapter.ContactDiffUtils()){
@@ -29,10 +32,10 @@ class MovieListAdapter:
         private val gridMovie4= view.findViewById<ImageView>(R.id.imageView4)
 
         fun bind(movieList: MovieList) {
-            gridMovie1.setImageResource(movieList.imageResId)
-            gridMovie2.setImageResource(movieList.imageResId)
-            gridMovie3.setImageResource(movieList.imageResId)
-            gridMovie4.setImageResource(movieList.imageResId)
+            Glide.with(gridMovie1.context).load(movieList.imageResId).into(gridMovie1)
+            Glide.with(gridMovie2.context).load(movieList.imageResId).into(gridMovie2)
+            Glide.with(gridMovie3.context).load(movieList.imageResId).into(gridMovie3)
+            Glide.with(gridMovie4.context).load(movieList.imageResId).into(gridMovie4)
         }
     }
 

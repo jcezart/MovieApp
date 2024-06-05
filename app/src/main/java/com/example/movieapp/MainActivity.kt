@@ -7,8 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movieapp.network.MoviesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,8 +40,33 @@ class MainActivity : AppCompatActivity() {
     val adapter2 = MovieListAdapter()
         rvMovieList.adapter = adapter2
         rvMovieList.layoutManager = LinearLayoutManager(this)
-        adapter2.submitList(movies)
+
+        //chamada à API para obter os filmes e adicionar na RecyclerView
+        lifecycleScope.launch {
+            val movies = getMovies()
+            adapter2.submitList(movies)
+        }
     }
+
+    private suspend fun getMovies(): List<MovieList> {
+        return withContext(Dispatchers.IO){
+            try {
+                val apiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMzRmMThiZjBkNTgwMmMyMWFmNzU5ODBmZjg3MmFkYSIsInN1YiI6IjY2NTllODkxNDZmMzBmMTM3NDc1MjIxMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.clVOiFA6nytRXRbV5MrIyvtk_pqJscXdRJlJhY3BLlo"
+                val response = MoviesApi.retrofitService.getNowPlayingMovies(apiKey)
+                response.results.map {
+                    MovieList(imageResId = R.drawable.movie_image1)
+                    MovieList(imageResId = R.drawable.movie_image2)
+                    MovieList(imageResId = R.drawable.movie_image3)
+                    MovieList(imageResId = R.drawable.movie_image4)
+                }
+            } catch (e:Exception) {
+                e.printStackTrace()
+                emptyList()
+            }
+        }
+    }
+
+
 }
 
 val categories = listOf(
