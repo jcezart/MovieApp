@@ -16,7 +16,7 @@ class CategoryAdapter:
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         // alimenta (infla) o item da lista com o resultado do CategoryViewHolder
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
-            return CategoryViewHolder(view)
+        return CategoryViewHolder(view)
     }
         // bind - atrelar o dado com a UI (views)
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
