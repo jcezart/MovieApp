@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.network.MoviesApi
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     val adapter2 = MovieListAdapter()
         rvMovieList.adapter = adapter2
-        rvMovieList.layoutManager = LinearLayoutManager(this)
+        rvMovieList.layoutManager = GridLayoutManager(this, 2)
 
         //chamada à API para obter os filmes e adicionar na RecyclerView
         lifecycleScope.launch {
