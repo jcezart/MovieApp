@@ -1,12 +1,8 @@
 package com.example.movieapp
 
-import android.graphics.Movie
 import android.os.Bundle
-import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,8 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-
 
     val rvCategory = findViewById<RecyclerView>(R.id.rv_categories)
     val rvMovieList = findViewById<RecyclerView>(R.id.rv_movieList)
@@ -51,14 +45,15 @@ class MainActivity : AppCompatActivity() {
     private suspend fun getMovies(): List<MovieList> {
         return withContext(Dispatchers.IO){
             try {
-                val apiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMzRmMThiZjBkNTgwMmMyMWFmNzU5ODBmZjg3MmFkYSIsInN1YiI6IjY2NTllODkxNDZmMzBmMTM3NDc1MjIxMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.clVOiFA6nytRXRbV5MrIyvtk_pqJscXdRJlJhY3BLlo"
+                val apiKey = "334f18bf0d5802c21af75980ff872ada"
                 val response = MoviesApi.retrofitService.getNowPlayingMovies(apiKey)
-                response.results.map {
-                    MovieList(imageResId = R.drawable.movie_image1)
-                    MovieList(imageResId = R.drawable.movie_image2)
-                    MovieList(imageResId = R.drawable.movie_image3)
-                    MovieList(imageResId = R.drawable.movie_image4)
+                val imageBaseUrl = "https://image.tmdb.org/t/p/w500"
+                val movies = response.results.map { movie ->
+                    MovieList(
+                            "$imageBaseUrl${movie.poster_path}"
+                        )
                 }
+                movies
             } catch (e:Exception) {
                 e.printStackTrace()
                 emptyList()
@@ -84,7 +79,7 @@ val categories = listOf(
     )
 )
 
-val movies = listOf(
+/*val movies = listOf(
     MovieList(
         imageResId = R.drawable.movie_image1),
     MovieList(
@@ -93,4 +88,4 @@ val movies = listOf(
         imageResId = R.drawable.movie_image3),
     MovieList(
         imageResId = R.drawable.movie_image4),
-    )
+    )*/

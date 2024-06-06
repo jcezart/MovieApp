@@ -1,14 +1,9 @@
 package com.example.movieapp.network
 
-import android.graphics.Movie
+import com.example.movieapp.Movie
 
 data class MovieResponse(
-    val results: List<com.example.movieapp.network.Movie>
+    val results: List<Movie>
 )
 
-data class Movie(
-    val id: Int,
-    val title: String,
-    val posterPath: String,
-    val overview: String
-)
+
