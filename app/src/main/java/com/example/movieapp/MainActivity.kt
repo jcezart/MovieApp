@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
     val rvCategory = findViewById<RecyclerView>(R.id.rv_categories)
     val rvMovieList = findViewById<RecyclerView>(R.id.rv_movieList)
 

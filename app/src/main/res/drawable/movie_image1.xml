@@ -3,6 +3,7 @@
     <item>
         <bitmap
             android:src="@drawable/movie1"
-            android:gravity="center" />
+            android:gravity="center"
+            />
     </item>
 </layer-list>
