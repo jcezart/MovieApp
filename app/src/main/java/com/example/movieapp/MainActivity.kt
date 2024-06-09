@@ -1,5 +1,6 @@
 package com.example.movieapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +35,11 @@ class MainActivity : AppCompatActivity() {
         //submetendo a lista no adapter
         adapter1.submitList(categories)
 
-    val adapter2 = MovieListAdapter()
+    val adapter2 = MovieListAdapter { movieId ->
+        val intent = Intent(this, MovieDetailsActivity::class.java)
+        intent.putExtra("MOVIE_ID", movieId)
+        startActivity(intent)
+    }
         rvMovieList.adapter = adapter2
         rvMovieList.layoutManager = GridLayoutManager(this, 2)
 
@@ -53,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                 val imageBaseUrl = "https://image.tmdb.org/t/p/w500"
                 val movies = response.results.map { movie ->
                     MovieList(
+                            id = movie.id,
                             "$imageBaseUrl${movie.poster_path}"
                         )
                 }

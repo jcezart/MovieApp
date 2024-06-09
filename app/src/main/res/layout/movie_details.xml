@@ -21,11 +21,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_back1"
-        android:layout_width="36dp"
-        android:layout_height="33dp"
-        tools:layout_editor_absoluteX="79dp"
-        tools:layout_editor_absoluteY="147dp" />
+    <ImageView
+        android:id="@+id/img_banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="36dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/movie_banner"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail" />
+
+    <TextView
+        android:id="@+id/tv_movieTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Movie Title"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/img_banner" />
+
+
+    <TextView
+        android:id="@+id/tv_movieOverview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        android:text="Movie Overview"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movieTitle"/>
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/light_black"
+        android:elevation="4dp"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:navigationIcon="@drawable/ic_back"/>
+
+    <View
+        android:id="@+id/top_line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/blue_baby"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

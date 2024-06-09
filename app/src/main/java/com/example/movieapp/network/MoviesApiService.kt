@@ -4,6 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Query
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 
 private const val BASE_URL = "https://api.themoviedb.org/3/"
@@ -14,7 +15,15 @@ private val retrofit = Retrofit.Builder()
 
 interface MoviesApiService{
     @GET("movie/now_playing")
-    suspend fun getNowPlayingMovies(@Query("api_key")apiKey: String) : MovieResponse
+    suspend fun getNowPlayingMovies(
+        @Query("api_key")apiKey: String)
+    : MovieResponse
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): MovieDetailResponse
 }
 
 object MoviesApi {
