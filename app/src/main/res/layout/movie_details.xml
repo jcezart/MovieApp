@@ -65,7 +65,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:navigationIcon="@drawable/ic_back"/>
+        android:navigationIcon="@drawable/ic_back"
+        />
 
     <View
         android:id="@+id/top_line"
