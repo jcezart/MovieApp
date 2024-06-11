@@ -64,23 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/rv_categories"
         tools:listitem="@layout/movie_list" />
 
-    <View
-        android:id="@+id/top_line"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/blue_baby"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar" />
 
-    <Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/light_black"
-        android:elevation="4dp"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintBottom_toBottomOf="@+id/rv_movieList"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

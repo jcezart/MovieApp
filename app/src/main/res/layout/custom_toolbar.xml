@@ -4,24 +4,29 @@
     android:id="@+id/custom_toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/light_black">
+    android:background="@color/light_black"
+    app:title="">
 
-    <ImageButton
-        android:id="@+id/btn_nav_back"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_back"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless" />
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/btn_nav_favorite"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_favorite_vazio"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:layout_marginStart="312dp" />
+        <ImageButton
+            android:id="@+id/btn_nav_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_back"
+            android:background="?attr/selectableItemBackgroundBorderless" />
 
-
+        <ImageButton
+            android:id="@+id/btn_nav_other"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_favorite_vazio"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginStart="288dp" />
+    </LinearLayout>
 </androidx.appcompat.widget.Toolbar>
