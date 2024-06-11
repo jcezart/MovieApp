@@ -1,10 +1,12 @@
 package com.example.movieapp
 
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.movieapp.network.MovieDetailResponse
@@ -24,10 +26,11 @@ class MovieDetailsActivity : AppCompatActivity() {
         val movieTitle: TextView = findViewById(R.id.tv_movieTitle)
         val movieOverview: TextView = findViewById(R.id.tv_movieOverview)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+
 
         lifecycleScope.launch {
             val movieDetails = getMovieDetails(movieId)
