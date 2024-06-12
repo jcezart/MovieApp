@@ -34,7 +34,6 @@ class MovieDetailsActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-
         lifecycleScope.launch {
             val movieDetails = getMovieDetails(movieId)
             movieTitle.text = movieDetails.title
@@ -43,7 +42,6 @@ class MovieDetailsActivity : AppCompatActivity() {
                 .load("https://image.tmdb.org/t/p/w500${movieDetails.backdropPath}")
                 .into(movieBanner)
         }
-
 
     }
 

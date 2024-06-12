@@ -4,6 +4,8 @@
         <bitmap
             android:src="@drawable/movie1"
             android:gravity="center"
+            
+
             />
     </item>
 </layer-list>

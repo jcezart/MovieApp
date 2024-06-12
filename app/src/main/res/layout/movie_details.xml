@@ -23,7 +23,7 @@
     <ImageView
         android:id="@+id/img_banner"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:layout_marginTop="36dp"
         android:scaleType="centerCrop"
         android:contentDescription="@string/movie_banner"
@@ -31,32 +31,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_miniBanner"
+        android:layout_width="158dp"
+        android:layout_height="153dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="252dp"
+        android:elevation="8dp"
+        android:src="@drawable/movie_image1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedImage"/>
+
     <TextView
         android:id="@+id/tv_movieTitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Movie Title"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/white"
-        android:gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_miniBanner"
         app:layout_constraintTop_toBottomOf="@+id/img_banner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintHorizontal_bias="0"        />
 
     <TextView
         android:id="@+id/tv_movieOverview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/white"
-        android:text="Movie Overview"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="8dp"
+        android:text="Movie Overview"
+        android:textColor="@color/white"
         android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movieTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_movieTitle" />
 
     <View
         android:id="@+id/top_line"
