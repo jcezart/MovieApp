@@ -58,12 +58,100 @@
         app:layout_constraintTop_toBottomOf="@+id/img_banner"
         app:layout_constraintHorizontal_bias="0"        />
 
+    <ImageView
+        android:id="@+id/img_calendar"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/img_miniBanner"
+        app:layout_constraintStart_toStartOf="@+id/img_miniBanner"
+        app:layout_constraintTop_toBottomOf="@+id/img_miniBanner"
+        android:src="@drawable/ic_calendar"/>
+
+    <TextView
+        android:id="@+id/tv_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2021"
+        android:textSize="10dp"
+        android:textColor="@color/gray"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/img_calendar"
+        app:layout_constraintStart_toEndOf="@+id/img_calendar"
+        app:layout_constraintTop_toTopOf="@+id/img_calendar" />
+
+    <ImageView
+        android:id="@+id/img_clock"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_calendar"
+        app:layout_constraintStart_toEndOf="@+id/tv_calendar"
+        app:layout_constraintTop_toTopOf="@+id/tv_calendar"
+        android:src="@drawable/ic_clock"/>
+
+    <TextView
+        android:id="@+id/tv_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="148 Minutes"
+        android:textSize="10dp"
+        android:textColor="@color/gray"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/img_clock"
+        app:layout_constraintStart_toEndOf="@+id/img_clock"
+        app:layout_constraintTop_toTopOf="@+id/img_clock" />
+
+    <ImageView
+        android:id="@+id/img_ticket"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_clock"
+        app:layout_constraintStart_toEndOf="@+id/tv_clock"
+        app:layout_constraintTop_toTopOf="@+id/tv_clock"
+        android:src="@drawable/ic_ticket"/>
+
+    <TextView
+        android:id="@+id/tv_ticket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Action"
+        android:textSize="10dp"
+        android:textColor="@color/gray"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/img_ticket"
+        app:layout_constraintStart_toEndOf="@+id/img_ticket"
+        app:layout_constraintTop_toTopOf="@+id/img_ticket" />
+
+    <ImageView
+        android:id="@+id/img_ratio"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="184dp"
+        android:src="@drawable/ic_ratio"
+        app:layout_constraintBottom_toBottomOf="@+id/img_banner"
+        app:layout_constraintStart_toEndOf="@+id/img_miniBanner" />
+
+    <TextView
+        android:id="@+id/tv_ratio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="9.5"
+        android:textColor="@color/gold"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/img_ratio"
+        app:layout_constraintStart_toEndOf="@+id/img_ratio"
+        app:layout_constraintTop_toTopOf="@+id/img_ratio" />
+
     <TextView
         android:id="@+id/tv_movieOverview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="170dp"
         android:layout_marginEnd="8dp"
         android:text="Movie Overview"
         android:textColor="@color/white"
