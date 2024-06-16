@@ -3,4 +3,6 @@
     <string name="what_do_you_want_to_watch">What do you want to watch?</string>
     <string name="detail">Detail</string>
     <string name="movie_banner">movie_banner</string>
+    <string name="runtime_format">%1$d minutes</string>
+    <string name="ratio_format">Ratio: %1$.1f</string>
 </resources>

@@ -129,7 +129,7 @@
         android:layout_width="24dp"
         android:layout_height="16dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginStart="184dp"
+        android:layout_marginStart="225dp"
         android:src="@drawable/ic_ratio"
         app:layout_constraintBottom_toBottomOf="@+id/img_banner"
         app:layout_constraintStart_toEndOf="@+id/img_miniBanner" />
@@ -145,6 +145,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/img_ratio"
         app:layout_constraintStart_toEndOf="@+id/img_ratio"
         app:layout_constraintTop_toTopOf="@+id/img_ratio" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_detailCategories"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/tv_movieOverview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/item_category" />
 
     <TextView
         android:id="@+id/tv_movieOverview"

@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 //O adapter vai adaptar as categorias da lista criadas na MainActivity dentro do item_category.xml
-class CategoryAdapter:
-    ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(ContactDiffUtils()) {
+class CategoryAdapter(
+    private val onCategoryClick: (String) -> Unit
+) : ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(ContactDiffUtils()) {
 
         //cria o viewholder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -24,13 +25,16 @@ class CategoryAdapter:
     }
 
     // O ViewHolder vai segurar os dados (ex: nome) e inflar os itens dentro da lista
-    class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view){
+    inner class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view){
         // Recuperando os dados do XML
         private val tvCategory = view.findViewById<TextView>(R.id.tv_category)
 
         //função está sendo criada para ser utilizada na função onBindViewHolder
         fun bind(category: Category){
             tvCategory.text = category.name
+            itemView.setOnClickListener {
+                onCategoryClick(category.name)
+            }
 
         }
     }

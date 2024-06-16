@@ -15,6 +15,8 @@ import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var adapter2: MovieListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -22,47 +24,57 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-    val rvCategory = findViewById<RecyclerView>(R.id.rv_categories)
-    val rvMovieList = findViewById<RecyclerView>(R.id.rv_movieList)
+        val rvCategory = findViewById<RecyclerView>(R.id.rv_categories)
+        val rvMovieList = findViewById<RecyclerView>(R.id.rv_movieList)
 
         //setando o adapter
-    val adapter1 = CategoryAdapter()
+        val adapter1 = CategoryAdapter { category ->
+            loadMoviesByCategory(category)
+        }
         rvCategory.adapter = adapter1
-        rvCategory.layoutManager = LinearLayoutManager(this)
-            .apply {
-                orientation = LinearLayoutManager.HORIZONTAL
-            }
+        rvCategory.layoutManager = LinearLayoutManager(this).apply {
+            orientation = LinearLayoutManager.HORIZONTAL
+        }
         //submetendo a lista no adapter
         adapter1.submitList(categories)
 
-    val adapter2 = MovieListAdapter { movieId ->
-        val intent = Intent(this, MovieDetailsActivity::class.java)
-        intent.putExtra("MOVIE_ID", movieId)
-        startActivity(intent)
-    }
+        adapter2 = MovieListAdapter { movieId ->
+            val intent = Intent(this, MovieDetailsActivity::class.java)
+            intent.putExtra("MOVIE_ID", movieId)
+            startActivity(intent)
+        }
         rvMovieList.adapter = adapter2
         rvMovieList.layoutManager = GridLayoutManager(this, 2)
 
-        //chamada à API para obter os filmes e adicionar na RecyclerView
-        lifecycleScope.launch {
-            val movies = getMovies()
+        // Carregar filmes "Now Playing" por padrão
+        loadMoviesByCategory("Now Playing")
+    }
+
+    private fun loadMoviesByCategory(category: String){
+        lifecycleScope.launch{
+            val movies = when (category) {
+                "Now Playing" -> getNowPlayingMovies()
+                "Upcoming" -> getUpcomingMovies()
+                "Top Rated" -> getTopRatedMovies()
+                "Popular" -> getPopularMovies()
+                else -> emptyList()
+            }
             adapter2.submitList(movies)
         }
     }
 
-    private suspend fun getMovies(): List<MovieList> {
+    private suspend fun getNowPlayingMovies(): List<MovieList> {
         return withContext(Dispatchers.IO){
             try {
                 val apiKey = "334f18bf0d5802c21af75980ff872ada"
                 val response = MoviesApi.retrofitService.getNowPlayingMovies(apiKey)
                 val imageBaseUrl = "https://image.tmdb.org/t/p/w500"
-                val movies = response.results.map { movie ->
+                response.results.map { movie ->
                     MovieList(
-                            id = movie.id,
-                            "$imageBaseUrl${movie.poster_path}"
-                        )
+                        id = movie.id,
+                        "$imageBaseUrl${movie.poster_path}"
+                    )
                 }
-                movies
             } catch (e:Exception) {
                 e.printStackTrace()
                 emptyList()
@@ -70,7 +82,62 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private suspend fun getUpcomingMovies(): List<MovieList> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val apiKey = "334f18bf0d5802c21af75980ff872ada"
+                val response = MoviesApi.retrofitService.getUpcomingMovies(apiKey)
+                val imageBaseUrl = "https://image.tmdb.org/t/p/w500"
+                response.results.map { movie ->
+                    MovieList(
+                        id = movie.id,
+                        "$imageBaseUrl${movie.poster_path}"
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emptyList()
+            }
+        }
+    }
 
+    private suspend fun getTopRatedMovies(): List<MovieList> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val apiKey = "334f18bf0d5802c21af75980ff872ada"
+                val response = MoviesApi.retrofitService.getTopRatedMovies(apiKey)
+                val imageBaseUrl = "https://image.tmdb.org/t/p/w500"
+                response.results.map { movie ->
+                    MovieList(
+                        id = movie.id,
+                        "$imageBaseUrl${movie.poster_path}"
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emptyList()
+            }
+        }
+    }
+
+    private suspend fun getPopularMovies(): List<MovieList> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val apiKey = "334f18bf0d5802c21af75980ff872ada"
+                val response = MoviesApi.retrofitService.getPopularMovies(apiKey)
+                val imageBaseUrl = "https://image.tmdb.org/t/p/w500"
+                response.results.map { movie ->
+                    MovieList(
+                        id = movie.id,
+                        "$imageBaseUrl${movie.poster_path}"
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emptyList()
+            }
+        }
+    }
 }
 
 val categories = listOf(
@@ -81,20 +148,9 @@ val categories = listOf(
         name = "Upcoming"
     ),
     Category(
-        name = "Top rated"
+        name = "Top Rated"
     ),
     Category(
         name = "Popular"
     )
 )
-
-/*val movies = listOf(
-    MovieList(
-        imageResId = R.drawable.movie_image1),
-    MovieList(
-        imageResId = R.drawable.movie_image2),
-    MovieList(
-        imageResId = R.drawable.movie_image3),
-    MovieList(
-        imageResId = R.drawable.movie_image4),
-    )*/
