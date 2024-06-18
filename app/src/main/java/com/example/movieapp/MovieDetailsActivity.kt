@@ -26,6 +26,8 @@ class MovieDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.movie_details)
 
 
+        supportActionBar?.hide()
+
         val movieId = intent.getIntExtra("MOVIE_ID", 0)
         val movieBanner: ImageView = findViewById(R.id.img_banner)
         val movieMiniBanner: ImageView = findViewById(R.id.img_miniBanner)
