@@ -3,30 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/custom_toolbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="48dp"
     android:background="@color/light_black"
     app:title="">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="horizontal"
+android:gravity="center_vertical">
 
-        <ImageButton
-            android:id="@+id/btn_nav_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_back"
-            android:background="?attr/selectableItemBackgroundBorderless" />
+<ImageButton
+    android:id="@+id/btn_nav_back"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginStart="-7dp"
+    android:src="@drawable/ic_back"
+    android:background="?attr/selectableItemBackgroundBorderless"
+     />
 
-        <ImageButton
-            android:id="@+id/btn_nav_other"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_favorite_vazio"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:layout_marginStart="288dp" />
-    </LinearLayout>
-</androidx.appcompat.widget.Toolbar>
+<TextView
+    android:id="@+id/toolbar_title"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:textColor="@color/white"
+    android:textSize="18sp"
+    android:textStyle="bold" />
+
+<ImageButton
+    android:id="@+id/btn_nav_other"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="18dp"
+    android:src="@drawable/ic_favorite_vazio"
+    android:background="?attr/selectableItemBackgroundBorderless"
+     />
+</LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
