@@ -22,10 +22,20 @@
             android:layout_height="wrap_content"
             android:paddingBottom="16dp">
 
+            <ImageButton
+                android:id="@+id/btn_nav_back2"
+                android:layout_width="25dp"
+                android:layout_height="28dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_back"
+                app:layout_constraintEnd_toStartOf="@+id/tv_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_detail" />
+
             <TextView
                 android:id="@+id/tv_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="320dp"
+                android:layout_height="27dp"
                 android:layout_margin="16dp"
                 android:gravity="center"
                 android:text="@string/detail"
@@ -61,18 +71,30 @@
 
             <TextView
                 android:id="@+id/tv_movieTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="121dp"
+                android:layout_height="65dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="Movie Title"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@+id/img_miniBanner"
-                app:layout_constraintTop_toBottomOf="@+id/img_banner"
-                app:layout_constraintHorizontal_bias="0" />
+                app:layout_constraintTop_toBottomOf="@+id/img_banner" />
+
+            <ImageButton
+                android:id="@+id/btn_nav_other"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="-128dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_favorite_vazio"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_movieTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_movieTitle"
+                app:layout_constraintTop_toTopOf="@+id/tv_movieTitle" />
 
             <ImageView
                 android:id="@+id/img_calendar"

@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class DetailCategoryAdapter:
-    ListAdapter<DetailCategory, DetailCategoryAdapter.DetailCategoryViewHolder>(ContactDiffUtils()){
+class DetailCategoryAdapter(
+    private val onDetailCategoryClick: (String) -> Unit
+) : ListAdapter<DetailCategory, DetailCategoryAdapter.DetailCategoryViewHolder>(ContactDiffUtils()) {
 
     //criando o viewholder
 
@@ -19,18 +20,18 @@ class DetailCategoryAdapter:
         return DetailCategoryViewHolder(view)
     }
 
-    override fun onBindViewHolder(
-        holder: DetailCategoryAdapter.DetailCategoryViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: DetailCategoryAdapter.DetailCategoryViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class DetailCategoryViewHolder(view: View) : RecyclerView.ViewHolder(view){
+    inner class DetailCategoryViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val tvDetailCategory = view.findViewById<TextView>(R.id.tv_category)
 
-        fun bind(category: DetailCategory){
-            tvDetailCategory.text = category.name
+        fun bind(detailCategory: DetailCategory){
+            tvDetailCategory.text = detailCategory.name
+            itemView.setOnClickListener{
+                onDetailCategoryClick(detailCategory.name)
+            }
         }
     }
 

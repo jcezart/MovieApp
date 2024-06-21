@@ -37,9 +37,9 @@ class MovieDetailsActivity : AppCompatActivity() {
         val movieDuration: TextView = findViewById(R.id.tv_clock)
         val movieGenre: TextView = findViewById(R.id.tv_ticket)
         val movieRatio: TextView = findViewById(R.id.tv_ratio)
-        val toolbar = findViewById<Toolbar>(R.id.custom_toolbar)
+        //val toolbar = findViewById<Toolbar>(R.id.custom_toolbar)
         setSupportActionBar(findViewById(R.id.custom_toolbar))
-        val backButton = toolbar.findViewById<ImageButton>(R.id.btn_nav_back)
+        val backButton: ImageButton = findViewById(R.id.btn_nav_back2)
         val rvDetailCategory = findViewById<RecyclerView>(R.id.rv_detailCategories)
 
         val adapter3 = DetailCategoryAdapter()
@@ -55,21 +55,30 @@ class MovieDetailsActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        lifecycleScope.launch {
-            val movieDetails = getMovieDetails(movieId)
-            movieTitle.text = movieDetails.title
-            movieOverview.text = movieDetails.overview
-            movieReleaseDate.text = movieDetails.releaseDate
-            movieDuration.text = getString(R.string.runtime_format, movieDetails.runtime)
-            movieGenre.text = movieDetails.genres.firstOrNull()?.name ?: "Unknown"
-            movieRatio.text = String.format("%.1f", movieDetails.ratio)
-            Glide.with(this@MovieDetailsActivity)
+        private fun loadDetailsByCategory(detailCategory: String){
+            lifecycleScope.launch {
+                val movieDetails = getMovieDetails(movieId)
+                movieTitle.text = movieDetails.title
+                movieOverview.text = movieDetails.overview
+                movieReleaseDate.text = movieDetails.releaseDate
+                movieDuration.text = getString(R.string.runtime_format, movieDetails.runtime)
+                movieGenre.text = movieDetails.genres.firstOrNull()?.name ?: "Unknown"
+                movieRatio.text = String.format("%.1f", movieDetails.ratio)
+                    Glide.with(this@MovieDetailsActivity)
                 .load("https://image.tmdb.org/t/p/w500${movieDetails.backdropPath}")
                 .into(movieBanner)
-            Glide.with(this@MovieDetailsActivity)
+                    Glide.with(this@MovieDetailsActivity)
                 .load("https://image.tmdb.org/t/p/w500${movieDetails.posterPath}")
                 .into(movieMiniBanner)
 
+                val movieDetailsPlus = when (detailCategory) {
+                    "About Movie" ->
+                    "Reviews" ->
+                    "Cast" ->
+                    "Streaming" ->
+                    else -> emptyList()
+                }
+            }
         }
 
     }

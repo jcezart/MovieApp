@@ -17,6 +17,6 @@ data class MovieDetailResponse(
     val runtime : Int,
     val genres: List<Genre>,
     @SerializedName("vote_average") val ratio: Float
-
+    //val reviews: String
 
 )
