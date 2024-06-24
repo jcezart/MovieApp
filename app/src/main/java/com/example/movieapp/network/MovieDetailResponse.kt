@@ -17,6 +17,45 @@ data class MovieDetailResponse(
     val runtime : Int,
     val genres: List<Genre>,
     @SerializedName("vote_average") val ratio: Float
-    //val reviews: String
-
 )
+
+
+data class MovieReviewListResponse(
+    val id: Int,
+    val results: List<MovieReviewResponse>
+)
+
+data class MovieReviewResponse(
+    val id: Int,
+    val author: String,
+    val content: String,
+    val rating: Int?
+)
+
+data class MovieCastResponse(
+    val cast: List<CastResponse>
+)
+
+data class CastResponse(
+    val id: Int,
+    val name: String,
+    val character: String,
+    @SerializedName("profile_path") val profilePath: String?
+)
+
+data class StreamingDetail(
+    @SerializedName("link") val link: String?,
+    @SerializedName("flatrate") val providers: List<Provider>?
+)
+
+data class Provider(
+    @SerializedName("provider_id") val providerId: Int,
+    @SerializedName("provider_name") val providerName: String,
+    @SerializedName("logo_path") val logoPath: String?
+)
+
+data class StreamingResponse(
+    val results: Map<String, StreamingDetail>
+)
+
+

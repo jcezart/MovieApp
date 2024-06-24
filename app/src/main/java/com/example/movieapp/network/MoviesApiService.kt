@@ -6,44 +6,60 @@ import retrofit2.http.Query
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-
 private const val BASE_URL = "https://api.themoviedb.org/3/"
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(BASE_URL)
     .build()
 
-interface MoviesApiService{
+interface MoviesApiService {
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
-        @Query("api_key")apiKey: String)
-    : MovieResponse
+        @Query("api_key") apiKey: String
+    ): MovieResponse
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
-        @Query("api_key")apiKey: String)
-            : MovieResponse
+        @Query("api_key") apiKey: String
+    ): MovieResponse
 
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
-        @Query("api_key")apiKey: String)
-            : MovieResponse
+        @Query("api_key") apiKey: String
+    ): MovieResponse
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
-        @Query("api_key")apiKey: String)
-            : MovieResponse
+        @Query("api_key") apiKey: String
+    ): MovieResponse
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): MovieDetailResponse
+
+    @GET("movie/{movie_id}/reviews")
+    suspend fun getMovieReviews(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): MovieReviewListResponse
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieCast(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): MovieCastResponse
+
+    @GET("movie/{movie_id}/watch/providers")
+    suspend fun getMovieStreaming(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): StreamingResponse
 }
 
 object MoviesApi {
-    val retrofitService : MoviesApiService by lazy {
+    val retrofitService: MoviesApiService by lazy {
         retrofit.create(MoviesApiService::class.java)
     }
 }
-

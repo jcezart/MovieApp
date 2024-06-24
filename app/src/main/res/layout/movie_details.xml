@@ -12,10 +12,10 @@
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/top_line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -51,11 +51,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_marginTop="16dp"
-                android:scaleType="centerCrop"
                 android:contentDescription="@string/movie_banner"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_detail" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/img_miniBanner"
@@ -67,7 +67,7 @@
                 android:src="@drawable/movie_image1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/img_banner"
-                app:shapeAppearanceOverlay="@style/RoundedImage"/>
+                app:shapeAppearanceOverlay="@style/RoundedImage" />
 
             <TextView
                 android:id="@+id/tv_movieTitle"
@@ -101,19 +101,19 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="16dp"
+                android:src="@drawable/ic_calendar"
                 app:layout_constraintEnd_toEndOf="@+id/img_miniBanner"
                 app:layout_constraintStart_toStartOf="@+id/img_miniBanner"
-                app:layout_constraintTop_toBottomOf="@+id/img_miniBanner"
-                android:src="@drawable/ic_calendar"/>
+                app:layout_constraintTop_toBottomOf="@+id/img_miniBanner" />
 
             <TextView
                 android:id="@+id/tv_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2021"
-                android:textSize="12sp"
-                android:textColor="@color/gray"
                 android:gravity="center"
+                android:text="2021"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/img_calendar"
                 app:layout_constraintStart_toEndOf="@+id/img_calendar"
                 app:layout_constraintTop_toTopOf="@+id/img_calendar" />
@@ -123,19 +123,19 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="10dp"
+                android:src="@drawable/ic_clock"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_calendar"
                 app:layout_constraintStart_toEndOf="@+id/tv_calendar"
-                app:layout_constraintTop_toTopOf="@+id/tv_calendar"
-                android:src="@drawable/ic_clock"/>
+                app:layout_constraintTop_toTopOf="@+id/tv_calendar" />
 
             <TextView
                 android:id="@+id/tv_clock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="148 Minutes"
-                android:textSize="12sp"
-                android:textColor="@color/gray"
                 android:gravity="center"
+                android:text="148 Minutes"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/img_clock"
                 app:layout_constraintStart_toEndOf="@+id/img_clock"
                 app:layout_constraintTop_toTopOf="@+id/img_clock" />
@@ -145,19 +145,19 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="10dp"
+                android:src="@drawable/ic_ticket"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_clock"
                 app:layout_constraintStart_toEndOf="@+id/tv_clock"
-                app:layout_constraintTop_toTopOf="@+id/tv_clock"
-                android:src="@drawable/ic_ticket"/>
+                app:layout_constraintTop_toTopOf="@+id/tv_clock" />
 
             <TextView
                 android:id="@+id/tv_ticket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Action"
-                android:textSize="12sp"
-                android:textColor="@color/gray"
                 android:gravity="center"
+                android:text="Action"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/img_ticket"
                 app:layout_constraintStart_toEndOf="@+id/img_ticket"
                 app:layout_constraintTop_toTopOf="@+id/img_ticket" />
@@ -166,8 +166,8 @@
                 android:id="@+id/img_ratio"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginBottom="4dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
                 android:src="@drawable/ic_ratio"
                 app:layout_constraintBottom_toBottomOf="@+id/img_banner"
                 app:layout_constraintStart_toEndOf="@+id/img_miniBanner" />
@@ -176,9 +176,9 @@
                 android:id="@+id/tv_ratio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:gravity="center"
                 android:text="9.5"
-                android:layout_marginStart="4dp"
                 android:textColor="@color/gold"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/img_ratio"
@@ -189,14 +189,14 @@
                 android:id="@+id/rv_detailCategories"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"
+                android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/tv_clock"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_clock"
                 tools:listitem="@layout/item_category" />
 
             <TextView
@@ -212,27 +212,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_detailCategories" />
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <View
-        android:id="@+id/top_line"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/blue_baby"
-        android:elevation="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <include
-        android:id="@+id/custom_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/custom_toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/top_line"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

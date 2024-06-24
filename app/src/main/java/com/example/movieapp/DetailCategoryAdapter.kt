@@ -9,40 +9,36 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class DetailCategoryAdapter(
-    private val onDetailCategoryClick: (String) -> Unit
-) : ListAdapter<DetailCategory, DetailCategoryAdapter.DetailCategoryViewHolder>(ContactDiffUtils()) {
+    private val onCategoryClick: (DetailCategory) -> Unit
+) : ListAdapter<DetailCategory, DetailCategoryAdapter.CategoryViewHolder>(ContactDiffUtils()) {
 
-    //criando o viewholder
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailCategoryViewHolder{
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
-        return DetailCategoryViewHolder(view)
+        return CategoryViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: DetailCategoryAdapter.DetailCategoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class DetailCategoryViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        private val tvDetailCategory = view.findViewById<TextView>(R.id.tv_category)
+    inner class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val tvCategory: TextView = view.findViewById(R.id.tv_category)
 
-        fun bind(detailCategory: DetailCategory){
-            tvDetailCategory.text = detailCategory.name
-            itemView.setOnClickListener{
-                onDetailCategoryClick(detailCategory.name)
+        fun bind(category: DetailCategory) {
+            tvCategory.text = category.name
+            tvCategory.setOnClickListener {
+                onCategoryClick(category)
             }
         }
     }
 
-    class ContactDiffUtils : DiffUtil.ItemCallback<DetailCategory>(){
+    class ContactDiffUtils : DiffUtil.ItemCallback<DetailCategory>() {
         override fun areItemsTheSame(oldItem: DetailCategory, newItem: DetailCategory): Boolean {
-            return oldItem == newItem
+            return oldItem.name == newItem.name
         }
 
         override fun areContentsTheSame(oldItem: DetailCategory, newItem: DetailCategory): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem == newItem
         }
     }
-
 }
