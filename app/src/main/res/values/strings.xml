@@ -5,4 +5,5 @@
     <string name="movie_banner">movie_banner</string>
     <string name="runtime_format">%1$d minutes</string>
     <string name="ratio_format">Ratio: %1$.1f</string>
+    <string name="watch_list">Watch List</string>
 </resources>
