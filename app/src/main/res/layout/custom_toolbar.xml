@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <ImageButton
-            android:id="@+id/btn_nav_back"
+            android:id="@+id/btn_home"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="15dp"
@@ -28,18 +28,18 @@
             android:layout_height="match_parent"
             android:src="@drawable/ic_search"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:layout_constraintStart_toEndOf="@id/btn_nav_back"
-            app:layout_constraintEnd_toStartOf="@id/btn_nav_other"
+            app:layout_constraintStart_toEndOf="@id/btn_home"
+            app:layout_constraintEnd_toStartOf="@id/btn_favoriteList"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5" />
 
         <ImageButton
-            android:id="@+id/btn_nav_other"
+            android:id="@+id/btn_favoriteList"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="15dp"
-            android:src="@drawable/ic_favorite_vazio"
+            android:src="@drawable/ic_favoritelist"
             android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

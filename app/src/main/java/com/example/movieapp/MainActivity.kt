@@ -2,12 +2,13 @@ package com.example.movieapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.lifecycleScope
 import com.example.movieapp.network.MoviesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,8 +27,14 @@ class MainActivity : AppCompatActivity() {
 
         val rvCategory = findViewById<RecyclerView>(R.id.rv_categories)
         val rvMovieList = findViewById<RecyclerView>(R.id.rv_movieList)
+        val watchListButton = findViewById<ImageButton>(R.id.btn_favoriteList)
 
-        //setando o adapter
+        watchListButton.setOnClickListener {
+            val intent = Intent(this, WatchListActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Set up the category adapter
         val adapter1 = CategoryAdapter { category ->
             loadMoviesByCategory(category)
         }
@@ -35,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         rvCategory.layoutManager = LinearLayoutManager(this).apply {
             orientation = LinearLayoutManager.HORIZONTAL
         }
-        //submetendo a lista no adapter
         adapter1.submitList(categories)
 
         adapter2 = MovieListAdapter { movieId ->
@@ -46,12 +52,12 @@ class MainActivity : AppCompatActivity() {
         rvMovieList.adapter = adapter2
         rvMovieList.layoutManager = GridLayoutManager(this, 2)
 
-        // Carregar filmes "Now Playing" por padrão
+        // Load "Now Playing" movies by default
         loadMoviesByCategory("Now Playing")
     }
 
-    private fun loadMoviesByCategory(category: String){
-        lifecycleScope.launch{
+    private fun loadMoviesByCategory(category: String) {
+        lifecycleScope.launch {
             val movies = when (category) {
                 "Now Playing" -> getNowPlayingMovies()
                 "Upcoming" -> getUpcomingMovies()
@@ -64,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun getNowPlayingMovies(): List<MovieList> {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             try {
                 val apiKey = "334f18bf0d5802c21af75980ff872ada"
                 val response = MoviesApi.retrofitService.getNowPlayingMovies(apiKey)
@@ -75,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                         "$imageBaseUrl${movie.poster_path}"
                     )
                 }
-            } catch (e:Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
                 emptyList()
             }

@@ -1,11 +1,12 @@
 package com.example.movieapp
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +20,9 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private lateinit var adapter3: DetailCategoryAdapter
     private lateinit var movieOverview: TextView
+    private lateinit var movieDetail: MovieDetailResponse
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.movie_details)
@@ -37,6 +40,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         val movieRatio: TextView = findViewById(R.id.tv_ratio)
         setSupportActionBar(findViewById(R.id.custom_toolbar))
         val backButton: ImageButton = findViewById(R.id.btn_nav_back2)
+        val favoriteButton: ImageButton = findViewById(R.id.btn_favorite)
         val rvDetailCategory = findViewById<RecyclerView>(R.id.rv_detailCategories)
 
         adapter3 = DetailCategoryAdapter { category ->
@@ -54,10 +58,36 @@ class MovieDetailsActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            loadMovieDetails(movieId)
+            movieDetail = getMovieDetails(movieId)
+            movieTitle.text = movieDetail.title
+            movieOverview.text = movieDetail.overview
+            movieReleaseDate.text = movieDetail.releaseDate
+            movieDuration.text = getString(R.string.runtime_format, movieDetail.runtime)
+            movieGenre.text = movieDetail.genres.firstOrNull()?.name ?: "Unknown"
+            movieRatio.text = String.format("%.1f", movieDetail.ratio)
+            Glide.with(this@MovieDetailsActivity)
+                .load("https://image.tmdb.org/t/p/w500${movieDetail.backdropPath}")
+                .into(movieBanner)
+            Glide.with(this@MovieDetailsActivity)
+                .load("https://image.tmdb.org/t/p/w500${movieDetail.posterPath}")
+                .into(movieMiniBanner)
+
+            favoriteButton.setOnClickListener {
+                val watchList = WatchList(
+                    id = movieDetail.id,
+                    poster_path = movieDetail.posterPath ?: "",
+                    title = movieDetail.title,
+                    release_date = movieDetail.releaseDate ?: "",
+                    runtime = movieDetail.runtime.toString(),
+                    genre = movieDetail.genres.firstOrNull()?.name ?: "Unknown",
+                    rating = movieDetail.ratio
+                )
+                val intent = Intent(this@MovieDetailsActivity, WatchListActivity::class.java)
+                intent.putParcelableArrayListExtra("FAVORITE_MOVIES", arrayListOf(watchList))
+                startActivity(intent)
+            }
         }
     }
-
 
     private fun loadDetailsByCategory(detailCategory: String, movieId: Int) {
         lifecycleScope.launch {
@@ -133,22 +163,6 @@ class MovieDetailsActivity : AppCompatActivity() {
                 null
             }
         }
-    }
-
-    private suspend fun loadMovieDetails(movieId: Int) {
-        val movieDetails = getMovieDetails(movieId)
-        findViewById<TextView>(R.id.tv_movieTitle).text = movieDetails.title
-        findViewById<TextView>(R.id.tv_movieOverview).text = movieDetails.overview
-        findViewById<TextView>(R.id.tv_calendar).text = movieDetails.releaseDate
-        findViewById<TextView>(R.id.tv_clock).text = getString(R.string.runtime_format, movieDetails.runtime)
-        findViewById<TextView>(R.id.tv_ticket).text = movieDetails.genres.firstOrNull()?.name ?: "Unknown"
-        findViewById<TextView>(R.id.tv_ratio).text = String.format("%.1f", movieDetails.ratio)
-        Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w500${movieDetails.backdropPath}")
-            .into(findViewById(R.id.img_banner))
-        Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w500${movieDetails.posterPath}")
-            .into(findViewById(R.id.img_miniBanner))
     }
 }
 

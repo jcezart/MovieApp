@@ -85,7 +85,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/img_banner" />
 
             <ImageButton
-                android:id="@+id/btn_nav_other"
+                android:id="@+id/btn_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="-128dp"

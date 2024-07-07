@@ -15,6 +15,7 @@
         android:theme="@style/Theme.MovieAPp"
         tools:targetApi="31">
         <activity android:name=".MovieDetailsActivity"/>
+        <activity android:name=".WatchListActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
