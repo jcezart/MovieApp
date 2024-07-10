@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class WatchListAdapter:
-    ListAdapter<WatchList, WatchListAdapter.WatchViewHolder>(WatchDiffCallBack()){
+class WatchListAdapter :
+    ListAdapter<MovieEntity, WatchListAdapter.WatchViewHolder>(WatchDiffCallBack()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListAdapter.WatchViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_favorite_movie, parent, false)
         return WatchViewHolder(view)
     }
@@ -22,7 +22,7 @@ class WatchListAdapter:
         holder.bind(getItem(position))
     }
 
-    class WatchViewHolder(view: View): RecyclerView.ViewHolder(view){
+    class WatchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val imgBanner: ImageView = view.findViewById(R.id.movie_banner)
         private val tvTitle: TextView = view.findViewById(R.id.movie_title)
         private val tvReleaseDate: TextView = view.findViewById(R.id.movie_release_date)
@@ -30,31 +30,25 @@ class WatchListAdapter:
         private val tvGenre: TextView = view.findViewById(R.id.movie_genre)
         private val tvRating: TextView = view.findViewById(R.id.movie_rating)
 
-
-        fun bind(watchList: WatchList) {
+        fun bind(movieEntity: MovieEntity) {
             Glide.with(imgBanner.context)
-                .load("https://image.tmdb.org/t/p/w500${watchList.poster_path}")
+                .load("https://image.tmdb.org/t/p/w500${movieEntity.posterPath}")
                 .into(imgBanner)
-            tvTitle.text = watchList.title
-            tvReleaseDate.text = watchList.release_date
-            tvDuration.text = watchList.runtime
-            tvGenre.text = watchList.genre
-            tvRating.text = watchList.rating.toString()
-
+            tvTitle.text = movieEntity.title
+            tvReleaseDate.text = movieEntity.releaseDate
+            tvDuration.text = movieEntity.runtime.toString()
+            tvGenre.text = movieEntity.genres
+            tvRating.text = movieEntity.rating.toString()
         }
     }
 
-    class WatchDiffCallBack : DiffUtil.ItemCallback<WatchList>(){
-        override fun areItemsTheSame(oldItem: WatchList, newItem: WatchList): Boolean {
+    class WatchDiffCallBack : DiffUtil.ItemCallback<MovieEntity>() {
+        override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: WatchList, newItem: WatchList): Boolean {
+        override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
             return oldItem == newItem
         }
     }
-
-
-
-
 }

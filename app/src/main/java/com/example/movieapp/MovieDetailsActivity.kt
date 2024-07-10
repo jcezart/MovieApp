@@ -1,5 +1,6 @@
 package com.example.movieapp
 
+
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -15,12 +16,16 @@ import com.example.movieapp.network.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.room.Room
 
 class MovieDetailsActivity : AppCompatActivity() {
 
     private lateinit var adapter3: DetailCategoryAdapter
     private lateinit var movieOverview: TextView
     private lateinit var movieDetail: MovieDetailResponse
+    private lateinit var db: MovieAppDB
+
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +33,11 @@ class MovieDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.movie_details)
 
         supportActionBar?.hide()
+
+        db = Room.databaseBuilder(
+            applicationContext,
+            MovieAppDB::class.java, "movie-DB"
+        ).build()
 
         val movieId = intent.getIntExtra("MOVIE_ID", 0)
         val movieBanner: ImageView = findViewById(R.id.img_banner)
@@ -76,14 +86,18 @@ class MovieDetailsActivity : AppCompatActivity() {
                 val watchList = WatchList(
                     id = movieDetail.id,
                     poster_path = movieDetail.posterPath ?: "",
+                    backdrop_path = movieDetail.backdropPath ?: "",
                     title = movieDetail.title,
                     release_date = movieDetail.releaseDate ?: "",
                     runtime = movieDetail.runtime.toString(),
                     genre = movieDetail.genres.firstOrNull()?.name ?: "Unknown",
-                    rating = movieDetail.ratio
+                    rating = movieDetail.ratio,
+                    overview = movieDetail.overview
                 )
+                lifecycleScope.launch {
+                    db.movieDao().insertAll(watchList.toMovieEntity())
+                }
                 val intent = Intent(this@MovieDetailsActivity, WatchListActivity::class.java)
-                intent.putParcelableArrayListExtra("FAVORITE_MOVIES", arrayListOf(watchList))
                 startActivity(intent)
             }
         }
