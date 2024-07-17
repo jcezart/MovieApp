@@ -1,9 +1,13 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    id("org.jetbrains.kotlin.kapt")
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
     id("org.jetbrains.kotlin.plugin.parcelize")
+}
 
+kapt {
+    correctErrorTypes = true
+    useBuildCache = false
 }
 
 android {
@@ -14,7 +18,7 @@ android {
         applicationId = "com.example.movieapp"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
+        versionCode = 17
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -22,7 +26,6 @@ android {
 
     buildFeatures {
         viewBinding = true
-
     }
 
     buildTypes {
@@ -36,18 +39,22 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        java {
+            toolchain {
+                languageVersion.set(JavaLanguageVersion.of(17))
+            }
+        }
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
-    val room_version = "2.6.1"
-
+    val room_version = "2.5.1"
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
     implementation("androidx.core:core-ktx:1.12.0")
@@ -83,4 +90,10 @@ dependencies {
     implementation("io.coil-kt:coil:1.1.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
