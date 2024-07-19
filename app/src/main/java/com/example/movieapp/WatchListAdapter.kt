@@ -36,7 +36,7 @@ class WatchListAdapter :
                 .into(imgBanner)
             tvTitle.text = movieEntity.title
             tvReleaseDate.text = movieEntity.releaseDate
-            tvDuration.text = movieEntity.runtime.toString()
+            tvDuration.text = movieEntity.runtime
             tvGenre.text = movieEntity.genres
             tvRating.text = movieEntity.rating.toString()
         }

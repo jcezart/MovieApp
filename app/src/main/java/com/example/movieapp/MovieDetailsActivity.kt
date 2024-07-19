@@ -1,6 +1,5 @@
 package com.example.movieapp
 
-
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -24,8 +23,6 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var movieOverview: TextView
     private lateinit var movieDetail: MovieDetailResponse
     private lateinit var db: MovieAppDB
-
-
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +70,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             movieOverview.text = movieDetail.overview
             movieReleaseDate.text = movieDetail.releaseDate
             movieDuration.text = getString(R.string.runtime_format, movieDetail.runtime)
-            movieGenre.text = movieDetail.genres.firstOrNull()?.name ?: "Unknown"
+            movieGenre.text = movieDetail.genres?.firstOrNull()?.name ?: "Unknown"
             movieRatio.text = String.format("%.1f", movieDetail.ratio)
             Glide.with(this@MovieDetailsActivity)
                 .load("https://image.tmdb.org/t/p/w500${movieDetail.backdropPath}")
@@ -83,20 +80,7 @@ class MovieDetailsActivity : AppCompatActivity() {
                 .into(movieMiniBanner)
 
             favoriteButton.setOnClickListener {
-                val watchList = WatchList(
-                    id = movieDetail.id,
-                    poster_path = movieDetail.posterPath ?: "",
-                    backdrop_path = movieDetail.backdropPath ?: "",
-                    title = movieDetail.title,
-                    release_date = movieDetail.releaseDate ?: "",
-                    runtime = movieDetail.runtime.toString(),
-                    genre = movieDetail.genres.firstOrNull()?.name ?: "Unknown",
-                    rating = movieDetail.ratio,
-                    overview = movieDetail.overview
-                )
-                lifecycleScope.launch {
-                    db.movieDao().insertAll(watchList.toMovieEntity())
-                }
+                saveToFavorites(movieDetail, "Favorite") // Adicione uma categoria apropriada aqui
                 val intent = Intent(this@MovieDetailsActivity, WatchListActivity::class.java)
                 startActivity(intent)
             }
@@ -176,6 +160,25 @@ class MovieDetailsActivity : AppCompatActivity() {
                 e.printStackTrace()
                 null
             }
+        }
+    }
+
+    private fun saveToFavorites(movieDetail: MovieDetailResponse, category: String) {
+        val movieEntity = MovieEntity(
+            id = movieDetail.id,
+            posterPath = movieDetail.posterPath ?: "",
+            backdropPath = movieDetail.backdropPath ?: "",
+            title = movieDetail.title,
+            releaseDate = movieDetail.releaseDate ?: "",
+            runtime = movieDetail.runtime.toString(),
+            genres = movieDetail.genres.joinToString { it.name },
+            rating = movieDetail.ratio,
+            overview = movieDetail.overview,
+            category = category
+        )
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            db.movieDao().insertAll(listOf(movieEntity))
         }
     }
 }

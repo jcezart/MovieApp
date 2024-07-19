@@ -10,6 +10,7 @@ fun WatchList.toMovieEntity(): MovieEntity {
         runtime = this.runtime,
         genres = this.genre,
         rating = this.rating,
-        overview = this.overview
+        overview = this.overview,
+        category = this.category
     )
 }

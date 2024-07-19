@@ -1,4 +1,3 @@
-// MovieEntity.kt
 package com.example.movieapp
 
 import androidx.room.Entity
@@ -14,5 +13,6 @@ data class MovieEntity(
     val runtime: String,
     val genres: String,
     val rating: Float,
-    val overview: String
+    val overview: String,
+    val category: String
 )

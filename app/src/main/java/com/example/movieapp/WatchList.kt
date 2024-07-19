@@ -13,5 +13,6 @@ data class WatchList(
     val runtime: String,
     val genre: String,
     val rating: Float,
-    val overview: String
+    val overview: String,
+    val category: String
 ) : Parcelable

@@ -9,19 +9,19 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.lifecycleScope
-import com.example.movieapp.network.MoviesApi
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter2: MovieListAdapter
+    private lateinit var repository: MovieRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        repository = MovieRepository(applicationContext)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -58,105 +58,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadMoviesByCategory(category: String) {
         lifecycleScope.launch {
-            val movies = when (category) {
-                "Now Playing" -> getNowPlayingMovies()
-                "Upcoming" -> getUpcomingMovies()
-                "Top Rated" -> getTopRatedMovies()
-                "Popular" -> getPopularMovies()
-                else -> emptyList()
-            }
+            val movies = repository.getMoviesByCategory(category)
             adapter2.submitList(movies)
-        }
-    }
-
-    private suspend fun getNowPlayingMovies(): List<MovieList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val apiKey = "334f18bf0d5802c21af75980ff872ada"
-                val response = MoviesApi.retrofitService.getNowPlayingMovies(apiKey)
-                val imageBaseUrl = "https://image.tmdb.org/t/p/w500"
-                response.results.map { movie ->
-                    MovieList(
-                        id = movie.id,
-                        "$imageBaseUrl${movie.poster_path}"
-                    )
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emptyList()
-            }
-        }
-    }
-
-    private suspend fun getUpcomingMovies(): List<MovieList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val apiKey = "334f18bf0d5802c21af75980ff872ada"
-                val response = MoviesApi.retrofitService.getUpcomingMovies(apiKey)
-                val imageBaseUrl = "https://image.tmdb.org/t/p/w500"
-                response.results.map { movie ->
-                    MovieList(
-                        id = movie.id,
-                        "$imageBaseUrl${movie.poster_path}"
-                    )
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emptyList()
-            }
-        }
-    }
-
-    private suspend fun getTopRatedMovies(): List<MovieList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val apiKey = "334f18bf0d5802c21af75980ff872ada"
-                val response = MoviesApi.retrofitService.getTopRatedMovies(apiKey)
-                val imageBaseUrl = "https://image.tmdb.org/t/p/w500"
-                response.results.map { movie ->
-                    MovieList(
-                        id = movie.id,
-                        "$imageBaseUrl${movie.poster_path}"
-                    )
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emptyList()
-            }
-        }
-    }
-
-    private suspend fun getPopularMovies(): List<MovieList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val apiKey = "334f18bf0d5802c21af75980ff872ada"
-                val response = MoviesApi.retrofitService.getPopularMovies(apiKey)
-                val imageBaseUrl = "https://image.tmdb.org/t/p/w500"
-                response.results.map { movie ->
-                    MovieList(
-                        id = movie.id,
-                        "$imageBaseUrl${movie.poster_path}"
-                    )
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emptyList()
-            }
         }
     }
 }
 
 val categories = listOf(
-    Category(
-        name = "Now Playing"
-    ),
-    Category(
-        name = "Upcoming"
-    ),
-    Category(
-        name = "Top Rated"
-    ),
-    Category(
-        name = "Popular"
-    )
+    Category(name = "Now Playing"),
+    Category(name = "Upcoming"),
+    Category(name = "Top Rated"),
+    Category(name = "Popular")
 )
