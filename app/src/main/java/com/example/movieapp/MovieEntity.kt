@@ -10,7 +10,7 @@ data class MovieEntity(
     val backdropPath: String,
     val title: String,
     val releaseDate: String,
-    val runtime: String,
+    val runtime: String?,
     val genres: String,
     val rating: Float,
     val overview: String,

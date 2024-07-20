@@ -23,7 +23,8 @@ class MovieListAdapter(private val onMovieClick: (Int) -> Unit) :
     }
 
     class MovieViewHolder(view: View,private val onMovieClick: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
-        private val imageView = view.findViewById<ImageView>(R.id.imageView)
+        private val imageView: ImageView = view.findViewById(R.id.imageView)
+
 
 
         fun bind(movieList: MovieList) {

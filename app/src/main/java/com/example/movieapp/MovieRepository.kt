@@ -41,8 +41,8 @@ class MovieRepository(context: Context) {
                     backdropPath = movieDetail.backdrop_path ?: "",
                     title = movieDetail.title,
                     releaseDate = movieDetail.releaseDate ?: "",
-                    runtime = movieDetail.runtime.toString(),
-                    genres = movieDetail.genres.joinToString { it.name },
+                    runtime = movieDetail.runtime,
+                    genres = movieDetail.genres?.joinToString(",") { it.name } ?:"",
                     rating = movieDetail.rating ?: 0f,
                     overview = movieDetail.overview ?: "",
                     category = category
