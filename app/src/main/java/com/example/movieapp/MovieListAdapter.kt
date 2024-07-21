@@ -28,8 +28,9 @@ class MovieListAdapter(private val onMovieClick: (Int) -> Unit) :
 
 
         fun bind(movieList: MovieList) {
+            val imageUrl = "https://image.tmdb.org/t/p/w500${movieList.imageResIds}"
             Glide.with(imageView.context)
-                .load(movieList.imageResIds)
+                .load(imageUrl)
                 .into(imageView)
             imageView.setOnClickListener{
                 onMovieClick(movieList.id)

@@ -18,4 +18,7 @@ interface MovieDAO {
 
     @Query("DELETE FROM movieentity WHERE category = :category")
     suspend fun deleteByCategory(category: String)
+
+    @Query("SELECT * FROM movieentity WHERE isFavorite = 1")
+    suspend fun getFavoriteMovies(): List<MovieEntity>
 }

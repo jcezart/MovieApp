@@ -80,4 +80,11 @@ class MovieRepository(context: Context) {
             db.movieDao().getAll()
         }
     }
+
+    suspend fun getFavoriteMovies(): List<MovieEntity> {
+        return withContext(Dispatchers.IO){
+            db.movieDao().getFavoriteMovies()
+        }
+    }
+
 }

@@ -41,7 +41,7 @@ class WatchListActivity : AppCompatActivity() {
 
     private fun loadFavoriteMovies() {
         lifecycleScope.launch {
-            val favoriteMovies = repository.getAllMovies()
+            val favoriteMovies = repository.getFavoriteMovies()
             adapter.submitList(favoriteMovies)
         }
     }

@@ -80,7 +80,7 @@ class MovieDetailsActivity : AppCompatActivity() {
                 .into(movieMiniBanner)
 
             favoriteButton.setOnClickListener {
-                saveToFavorites(movieDetail, "Favorite") // Adicione uma categoria apropriada aqui
+                saveToFavorites(movieDetail) // Adicione uma categoria apropriada aqui
                 val intent = Intent(this@MovieDetailsActivity, WatchListActivity::class.java)
                 startActivity(intent)
             }
@@ -163,7 +163,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveToFavorites(movieDetail: MovieDetailResponse, category: String) {
+    private fun saveToFavorites(movieDetail: MovieDetailResponse) {
         val movieEntity = MovieEntity(
             id = movieDetail.id,
             posterPath = movieDetail.posterPath ?: "",
@@ -174,7 +174,8 @@ class MovieDetailsActivity : AppCompatActivity() {
             genres = movieDetail.genres.joinToString { it.name },
             rating = movieDetail.ratio,
             overview = movieDetail.overview,
-            category = category
+            category = "Favorite",
+            isFavorite = true
         )
 
         lifecycleScope.launch(Dispatchers.IO) {
