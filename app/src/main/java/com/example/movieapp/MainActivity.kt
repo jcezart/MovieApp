@@ -1,10 +1,14 @@
 package com.example.movieapp
 
+import MovieViewModel
+import MovieViewModelFactory
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +19,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter2: MovieListAdapter
     private lateinit var repository: MovieRepository
+
+    private val viewModel: MovieViewModel by viewModels {
+        MovieViewModelFactory(repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +60,16 @@ class MainActivity : AppCompatActivity() {
         rvMovieList.adapter = adapter2
         rvMovieList.layoutManager = GridLayoutManager(this, 2)
 
+        // Observe the ViewModel data
+        viewModel.movies.observe(this, Observer {movies ->
+            adapter2.submitList(movies)
+        })
+
         // Load "Now Playing" movies by default
-        loadMoviesByCategory("Now Playing")
+        viewModel.loadMoviesByCategory("Now Playing")
+
+        // Load "Now Playing" movies by default
+        //loadMoviesByCategory("Now Playing")
     }
 
     private fun loadMoviesByCategory(category: String) {
