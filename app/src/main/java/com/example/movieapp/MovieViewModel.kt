@@ -15,6 +15,7 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
 
     fun loadMoviesByCategory(category: String) {
         viewModelScope.launch {
+            repository.fetchAndSaveMovies("334f18bf0d5802c21af75980ff872ada", category)
             val movieList = repository.getMoviesByCategory(category)
             _movies.postValue(movieList)
         }
@@ -24,6 +25,19 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
         viewModelScope.launch {
             val movieList = repository.getFavoriteMovies()
             _favoriteMovies.postValue(movieList)
+        }
+    }
+
+    fun searchMovies(query: String) {
+        viewModelScope.launch {
+            val moviesList = repository.searchMovies(query)
+            _movies.postValue(moviesList)
+        }
+    }
+
+    fun fetchAndSaveMovies(apiKey: String, category: String) {
+        viewModelScope.launch {
+            repository.fetchAndSaveMovies(apiKey, category)
         }
     }
 }

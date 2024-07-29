@@ -5,6 +5,7 @@ import MovieViewModelFactory
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         val rvCategory = findViewById<RecyclerView>(R.id.rv_categories)
         val rvMovieList = findViewById<RecyclerView>(R.id.rv_movieList)
         val watchListButton = findViewById<ImageButton>(R.id.btn_favoriteList)
+        val searchView = findViewById<SearchView>(R.id.sv_search)
 
         watchListButton.setOnClickListener {
             val intent = Intent(this, WatchListActivity::class.java)
@@ -65,11 +67,32 @@ class MainActivity : AppCompatActivity() {
             adapter2.submitList(movies)
         })
 
-        // Load "Now Playing" movies by default
-        viewModel.loadMoviesByCategory("Now Playing")
+        // Set up the search view
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    viewModel.searchMovies(query)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    viewModel.loadMoviesByCategory("Now Playing")
+                } else {
+                    viewModel.searchMovies(newText)
+                }
+                return true
+            }
+        })
 
         // Load "Now Playing" movies by default
-        //loadMoviesByCategory("Now Playing")
+        lifecycleScope.launch {
+            viewModel.fetchAndSaveMovies("334f18bf0d5802c21af75980ff872ada", "Now Playing")
+            viewModel.loadMoviesByCategory("Now Playing")
+
+        }
+
     }
 
     private fun loadMoviesByCategory(category: String) {

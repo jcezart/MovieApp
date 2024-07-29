@@ -31,6 +31,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        // Inicializa o banco de dados Room
         db = Room.databaseBuilder(
             applicationContext,
             MovieAppDB::class.java, "movie-DB"
@@ -64,6 +65,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        // Carregar detalhes do filme e configurar os botões
         lifecycleScope.launch {
             movieDetail = getMovieDetails(movieId)
             movieTitle.text = movieDetail.title
@@ -80,7 +82,7 @@ class MovieDetailsActivity : AppCompatActivity() {
                 .into(movieMiniBanner)
 
             favoriteButton.setOnClickListener {
-                saveToFavorites(movieDetail) // Adicione uma categoria apropriada aqui
+                saveToFavorites(movieDetail)
                 val intent = Intent(this@MovieDetailsActivity, WatchListActivity::class.java)
                 startActivity(intent)
             }
@@ -164,6 +166,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun saveToFavorites(movieDetail: MovieDetailResponse) {
+        // Adicionada a propriedade isFavorite ao MovieEntity
         val movieEntity = MovieEntity(
             id = movieDetail.id,
             posterPath = movieDetail.posterPath ?: "",
@@ -174,15 +177,20 @@ class MovieDetailsActivity : AppCompatActivity() {
             genres = movieDetail.genres.joinToString { it.name },
             rating = movieDetail.ratio,
             overview = movieDetail.overview,
-            category = "Favorite",
-            isFavorite = true
+            category = "Favorite", // Adiciona uma categoria fixa "Favorite"
+            isFavorite = true // Marca o filme como favorito
         )
 
         lifecycleScope.launch(Dispatchers.IO) {
+            val existingMovie = db.movieDao().getMovieById(movieDetail.id)
+            if (existingMovie != null) {
+                existingMovie.isFavorite = true
+                db.movieDao().update(existingMovie)
+            } else {
             db.movieDao().insertAll(listOf(movieEntity))
         }
     }
-}
+}}
 
 val detailCategories = listOf(
     DetailCategory(

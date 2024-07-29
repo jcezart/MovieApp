@@ -15,5 +15,5 @@ data class MovieEntity(
     val rating: Float,
     val overview: String,
     val category: String,
-    val isFavorite: Boolean = false
+    var isFavorite: Boolean = false
 )

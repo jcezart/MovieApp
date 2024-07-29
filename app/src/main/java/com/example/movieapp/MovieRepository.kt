@@ -16,11 +16,18 @@ class MovieRepository(context: Context) {
     suspend fun fetchAndSaveMovies(apiKey: String, category: String) {
         val moviesFromApi = fetchMoviesFromApi(apiKey, category)
         withContext(Dispatchers.IO) {
-            val savedMovies = db.movieDao().getMoviesByCategory(category)
-            if (savedMovies != moviesFromApi) {
-                db.movieDao().deleteByCategory(category)
-                db.movieDao().insertAll(moviesFromApi)
+            // Obtenha os favoritos atuais antes de deletar os filmes pela categoria
+            val currentFavorites = db.movieDao().getFavoriteMovies().map { it.id }
+            // Filtre os filmes obtidos da API para não sobrescrever o status de favorito
+            val moviesToSave = moviesFromApi.map { movie ->
+                if (currentFavorites.contains(movie.id)) {
+                    movie.copy(isFavorite = true)
+                } else {
+                    movie
+                }
             }
+            db.movieDao().deleteByCategory(category)
+            db.movieDao().insertAll(moviesToSave)
         }
     }
 
@@ -63,8 +70,8 @@ class MovieRepository(context: Context) {
         }.map {
             MovieList(
                 id = it.id,
-                imageResIds = it.posterPath,
-                poster_path = it.posterPath // Certifique-se de passar o parâmetro 'poster_path'
+                imageResIds = it.posterPath
+                //poster_path = it.posterPath // Certifique-se de passar o parâmetro 'poster_path'
             )
         }
     }
@@ -84,6 +91,15 @@ class MovieRepository(context: Context) {
     suspend fun getFavoriteMovies(): List<MovieEntity> {
         return withContext(Dispatchers.IO){
             db.movieDao().getFavoriteMovies()
+        }
+    }
+
+    suspend fun searchMovies(query: String): List<MovieList> {
+        return withContext(Dispatchers.IO) {
+            val movies = db.movieDao().searchMoviesByTitle("%$query%")
+            movies.map{
+                MovieList(it.id, it.posterPath)
+            }
         }
     }
 

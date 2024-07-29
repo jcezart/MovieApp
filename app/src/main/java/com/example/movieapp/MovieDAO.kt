@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface MovieDAO {
@@ -21,4 +22,13 @@ interface MovieDAO {
 
     @Query("SELECT * FROM movieentity WHERE isFavorite = 1")
     suspend fun getFavoriteMovies(): List<MovieEntity>
+
+    @Query("SELECT * FROM movieentity WHERE title LIKE :query")
+    suspend fun searchMoviesByTitle(query: String): List<MovieEntity>
+
+    @Query("SELECT * FROM movieentity WHERE id = :movieId LIMIT 1")
+    suspend fun getMovieById(movieId: Int): MovieEntity?
+
+    @Update
+    suspend fun update(movie: MovieEntity)
 }
