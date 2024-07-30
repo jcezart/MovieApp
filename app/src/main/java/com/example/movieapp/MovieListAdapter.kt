@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class MovieListAdapter(private val onMovieClick: (Int) -> Unit) :
-    ListAdapter<MovieList, MovieListAdapter.MovieViewHolder>(MovieDiffCallback()) {
+    ListAdapter<MovieEntity, MovieListAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_list, parent, false)
@@ -27,27 +27,26 @@ class MovieListAdapter(private val onMovieClick: (Int) -> Unit) :
 
 
 
-        fun bind(movieList: MovieList) {
-            val imageUrl = "https://image.tmdb.org/t/p/w500${movieList.imageResIds}"
+        fun bind(movieEntity: MovieEntity) {
+            val imageUrl = "https://image.tmdb.org/t/p/w500${movieEntity.posterPath}"
             Glide.with(imageView.context)
                 .load(imageUrl)
                 .into(imageView)
             imageView.setOnClickListener{
-                onMovieClick(movieList.id)
+                onMovieClick(movieEntity.id)
             }
 
 
         }
     }
 
-    class MovieDiffCallback : DiffUtil.ItemCallback<MovieList>() {
-        override fun areItemsTheSame(oldItem: MovieList, newItem: MovieList): Boolean {
-            return oldItem == newItem
+    class MovieDiffCallback : DiffUtil.ItemCallback<MovieEntity>() {
+        override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        @SuppressLint("DiffUtilEquals")
-        override fun areContentsTheSame(oldItem: MovieList, newItem: MovieList): Boolean {
-            return oldItem.imageResIds == newItem.imageResIds
+        override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+            return oldItem == newItem
         }
     }
 }

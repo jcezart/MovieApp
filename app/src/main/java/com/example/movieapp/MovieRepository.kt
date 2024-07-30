@@ -58,7 +58,7 @@ class MovieRepository(context: Context) {
         }
     }
 
-    suspend fun getMoviesByCategory(category: String): List<MovieList> {
+    suspend fun getMoviesByCategory(category: String): List<MovieEntity> {
         return withContext(Dispatchers.IO) {
             val savedMovies = db.movieDao().getMoviesByCategory(category)
             if (savedMovies.isEmpty()) {
@@ -67,12 +67,6 @@ class MovieRepository(context: Context) {
             } else {
                 savedMovies
             }
-        }.map {
-            MovieList(
-                id = it.id,
-                imageResIds = it.posterPath
-                //poster_path = it.posterPath // Certifique-se de passar o parâmetro 'poster_path'
-            )
         }
     }
 
@@ -94,13 +88,9 @@ class MovieRepository(context: Context) {
         }
     }
 
-    suspend fun searchMovies(query: String): List<MovieList> {
+    suspend fun searchMovies(query: String): List<MovieEntity> {
         return withContext(Dispatchers.IO) {
-            val movies = db.movieDao().searchMoviesByTitle("%$query%")
-            movies.map{
-                MovieList(it.id, it.posterPath)
-            }
+            db.movieDao().searchMoviesByTitle("%$query%")
         }
     }
-
 }
