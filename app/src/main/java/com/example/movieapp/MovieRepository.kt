@@ -44,13 +44,13 @@ class MovieRepository(context: Context) {
             movies.map { movieDetail ->
                 MovieEntity(
                     id = movieDetail.id,
-                    posterPath = movieDetail.poster_path ?: "",
-                    backdropPath = movieDetail.backdrop_path ?: "",
+                    posterPath = movieDetail.posterPath ?: "",
+                    backdropPath = movieDetail.backdropPath ?: "",
                     title = movieDetail.title,
                     releaseDate = movieDetail.releaseDate ?: "",
-                    runtime = movieDetail.runtime,
+                    runtime = movieDetail.runtime.toString(),
                     genres = movieDetail.genres?.joinToString(",") { it.name } ?:"",
-                    rating = movieDetail.rating ?: 0f,
+                    rating = movieDetail.ratio ?: 0f,
                     overview = movieDetail.overview ?: "",
                     category = category
                 )
